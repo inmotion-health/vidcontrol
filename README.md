@@ -7,13 +7,31 @@ vidcontrol is a python package for managing multi-webcam video capture. It is de
 This package has been developed in conjunction with the [ctrlability](https://github.com/inmotion-health/ctrlability) together with the [Prototype Fund](https://prototypefund.de/).
 
 
-| Platform | Status                  |
-| -------- | ----------------------- |
-| MacOS    | full support            |
-| Linux    | not yet, but planned    |
-| Windows  | currently working on it |
+| Platform | Status                  |                                    |
+| -------- | ----------------------- | ---------------------------------- |
+| MacOS    | full support            | tested and verified on macOS 12.0+ |
+| Linux    | not yet, but planned    |                                    |
+| Windows  | currently working on it | tested and verified on Windows 11  |
 
 ## Getting Started
+
+```python
+import vidcontrol as vc
+
+manager = vc.VideoManager()
+
+# list available webcams
+manager.list_available_cameras()
+
+# set the height of the video capture
+manager.set_preferred_height(480)
+
+# get a video source and start capturing
+source = manager.get_video_source(0)
+for frame in source:
+    # do something with the frame
+    pass
+```
 
 ## Contributing and Issues
 
