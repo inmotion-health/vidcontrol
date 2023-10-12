@@ -79,7 +79,7 @@ manager.set_preferred_height(height: int)   # default: 480
 
 ```python
 source.set_flip_frame(flip: bool)           # default: True
-source.set_color_format(color_format: str)  # default: 'rgb'
+source.set_color_format(color_format: str)  # default: 'rgb', other options: 'bgr'
 ```
 
 ## Contributing and Issues
