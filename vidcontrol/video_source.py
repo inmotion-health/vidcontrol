@@ -38,6 +38,7 @@ class VideoSource:
 
         # default settings
         self.flip_frame = True
+        self.color_format = "rgb"
 
     def __iter__(self):
         return self
@@ -51,10 +52,16 @@ class VideoSource:
         if self.flip_frame:
             frame = self.flip(frame)
 
+        if self.color_format == "bgr":
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+
         return frame
 
     def set_flip_frame(self, flip_frame: bool):
         self.flip_frame = flip_frame
+
+    def set_color_format(self, color_format: str):
+        self.color_format = color_format
 
     @staticmethod
     def flip(frame: np.array) -> np.array:
