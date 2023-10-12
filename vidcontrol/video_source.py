@@ -1,5 +1,5 @@
 import logging as log
-from typing import Optional, Set
+from typing import Optional
 
 import cv2
 import imageio
@@ -28,13 +28,17 @@ class VideoSource:
                 input_params=[
                     "-framerate",
                     f"{self.fps}",
+                    "-pixel_format",
+                    "uyvy422",
                 ],
             )
         except Exception as e:
             log.error(f"Could not create reader for device {device_name} with resolution {resolution} and fps {fps}")
             log.error(e)
             self.reader = None
-            raise Exception("Could not create reader for device")
+            raise Exception(f"Could not create reader for device {device_name}")
+        else:
+            log.info(f"Created reader for device {device_name} with resolution {resolution} and fps {fps}")
 
         # default settings
         self.flip_frame = True
