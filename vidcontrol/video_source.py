@@ -63,9 +63,7 @@ class VideoSource:
         self.height = resolution[1]
 
         device_name = video_platform.get_ffmpeg_device_name(self._camera_id)
-        log.info(
-            f"Using resolution {resolution} and FPS: {self.fps} for camera with name: '{device_name}'"
-        )
+        log.info(f"Using resolution {resolution} and FPS: {self.fps} for camera with name: '{device_name}'")
 
         if platform.system() == "Windows":
             if camera_id in VideoSource.used_camera_ids:
@@ -84,16 +82,12 @@ class VideoSource:
 
         VideoSource.used_camera_ids.add(camera_id)
 
-    def change_resolution(
-        self, cam_id
-    ):  # FIXME: big big smelly smell that we do this twice...
+    def change_resolution(self, cam_id):  # FIXME: big big smelly smell that we do this twice...
         resolutions = video_platform.list_available_resolutions(self._camera_id)
         selected_resolution = resolutions[cam_id]
         device_name = video_platform.get_ffmpeg_device_name(self._camera_id)
 
-        log.info(
-            f"Using resolution {selected_resolution}, FPS: {self.fps} for camera {device_name}."
-        )
+        log.info(f"Using resolution {selected_resolution}, FPS: {self.fps} for camera {device_name}.")
 
         self.reader = imageio.get_reader(
             device_name,

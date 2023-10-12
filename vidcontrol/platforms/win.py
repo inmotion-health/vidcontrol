@@ -23,9 +23,7 @@ class WindowsVideoPlatform(base.VideoPlatform):
         log.debug(f"Found video devices: {dict_devices}")
         return dict_devices
 
-    def list_available_resolutions(
-        self, device_id: int
-    ) -> Optional[List[Tuple[Tuple[int, int], int]]]:
+    def list_available_resolutions(self, device_id: int) -> Optional[List[Tuple[Tuple[int, int], int]]]:
         self.graph = FilterGraph()  # Resetting the graph to remove the previous device
         self.graph.add_video_input_device(device_id)
 
@@ -41,5 +39,4 @@ class WindowsVideoPlatform(base.VideoPlatform):
         return resolutions
 
     def get_ffmpeg_device_name(self, cam_id: int) -> str:
-        all_devices = self.list_video_devices()
         return f"<video{cam_id}>"

@@ -14,9 +14,7 @@ class MacVideoPlatform(base.VideoPlatform):
         return "avfoundation"
 
     def list_video_devices(self) -> Dict[int, str]:
-        output = subprocess.get_cmd_output(
-            ["ffmpeg", "-f", self.get_video_format(), "-list_devices", "true", "-i", ""]
-        )
+        output = subprocess.get_cmd_output(["ffmpeg", "-f", self.get_video_format(), "-list_devices", "true", "-i", ""])
 
         if output == "":
             raise Exception("No output from ffmpeg")
@@ -54,9 +52,7 @@ class MacVideoPlatform(base.VideoPlatform):
             # Iterate over the video lines
             for line in video_lines:
                 match = re.search(pattern, line)
-                if match and "Capture screen" not in match.group(
-                    2
-                ):  # Ignore screen capture devices
+                if match and "Capture screen" not in match.group(2):  # Ignore screen capture devices
                     device_id = int(match.group(1))
                     device_name = match.group(2)
                     video_devices[device_id] = device_name
@@ -64,9 +60,7 @@ class MacVideoPlatform(base.VideoPlatform):
             log.debug(f"Found video devices: {video_devices}")
         return video_devices
 
-    def list_available_resolutions(
-        self, device_id: int
-    ) -> Optional[List[Tuple[Tuple[int, int], int]]]:
+    def list_available_resolutions(self, device_id: int) -> Optional[List[Tuple[Tuple[int, int], int]]]:
         output = subprocess.get_cmd_output(
             [
                 "ffmpeg",
