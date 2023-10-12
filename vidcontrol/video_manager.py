@@ -1,5 +1,7 @@
-import vidcontrol.video_platform as video_platform
+from vidcontrol.video_platform import video_platform
 from vidcontrol.video_source import VideoSource
+
+import logging as log
 
 
 class VideoManager:
@@ -7,21 +9,26 @@ class VideoManager:
 
     preferred_height = 480
 
-    def __init__(self):
-        self.platform = video_platform.get_platform()
+    def create_source(self, camera_id: int):
+        resolution, fps = video_platform.get_resolution_for(camera_id, self.preferred_height)
+        log.debug(f"Using resolution {resolution} and fps {fps} for camera {camera_id}")
 
-    def create_readers(self):
-        webcam_list = self.platform.list_video_devices()
-        cam_ids = [cam.id for cam in webcam_list]
+        VideoManager._readers = {camera_id: VideoSource(camera_id, resolution, fps)}
 
-        for cam_id in cam_ids:
-            print("Creating reader for cam_id: " + cam_id)
+        log.info(f"Created reader for camera {camera_id}")
 
-    def get_video_source(self, cam_id) -> VideoSource:
-        raise NotImplementedError("get_video_source is not implemented")
+    def get_video_source(self, camera_id) -> VideoSource:
+        # Check if the reader already exists
+        if camera_id in VideoManager._readers:
+            return VideoManager._readers[camera_id]
+
+        # Create the reader
+        self.create_source(camera_id)
+
+        return VideoManager._readers[camera_id]
 
     def list_available_cameras(self):
-        return self.platform.list_video_devices()
+        return video_platform.list_video_devices()
 
     def set_preferred_height(self, height: int):
         self.preferred_height = height
