@@ -19,11 +19,11 @@ class VideoPlatform:
     def get_ffmpeg_device_name(self, cam_id: int) -> str:
         pass
 
-    def get_resolution_for(self, camera_id: int, preferred_height: int) -> Optional[Tuple[Tuple[int, int], int]]:
+    def get_resolution_for(self, camera_id: int, preferred_height: int) -> Tuple[Tuple[int, int], int]:
         resolutions = self.list_available_resolutions(camera_id)
 
         if not resolutions:
-            return None
+            raise Exception(f"No resolutions found for camera {camera_id}")
 
         # Find 720p resolutions
         _720_resolutions = [res for res in resolutions if res[0][1] == preferred_height]
