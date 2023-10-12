@@ -1,4 +1,5 @@
 from vidcontrol import VideoManager
+import cv2
 
 manager = VideoManager()
 
@@ -19,6 +20,12 @@ except Exception as e:
 # configure the video source
 source.set_flip_frame(False)
 
+# iterate over the frames and display them
 for frame in source:
-    # do something with the frame
-    pass
+    frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+    cv2.imshow("frame", frame_bgr)
+    key = cv2.waitKey(1)  # Wait for 1 millisecond
+    if key == 27:  # Exit loop on 'Esc' key press
+        break
+
+cv2.destroyAllWindows()
