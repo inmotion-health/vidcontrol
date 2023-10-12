@@ -14,10 +14,12 @@ This package has been developed in conjunction with the [ctrlability](https://gi
 
 ## Getting Started
 
-```python
-import vidcontrol as vc
+### Basic Usage
 
-manager = vc.VideoManager()
+```python
+from vidcontrol import VideoManager
+
+manager = VideoManager()
 
 # list available webcams
 manager.list_available_cameras()
@@ -31,6 +33,10 @@ for frame in source:
     # do something with the frame
     pass
 ```
+
+For more detailed examples, please see the [examples](examples) folder.
+
+### Configuration
 
 ## Contributing and Issues
 
