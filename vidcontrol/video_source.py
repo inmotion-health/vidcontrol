@@ -41,7 +41,8 @@ class VideoSource:
             log.info(f"Created reader for device {device_name} with resolution {resolution} and fps {fps}")
 
         # default settings
-        self.flip_frame = True
+        self.flip_frame_vertical = True
+        self.flip_frame_horizontal = False
         self.color_format = "rgb"
 
     def __iter__(self):
@@ -53,23 +54,25 @@ class VideoSource:
 
         frame = self.reader.get_next_data()
 
-        if self.flip_frame:
-            frame = self.flip(frame)
+        if self.flip_frame_vertical:
+            frame = cv2.flip(frame, 1)
+
+        if self.flip_frame_horizontal:
+            frame = cv2.flip(frame, 0)
 
         if self.color_format == "bgr":
             frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
         return frame
 
-    def set_flip_frame(self, flip_frame: bool):
-        self.flip_frame = flip_frame
+    def set_mirror_frame(self, flip_frame: bool):
+        self.flip_frame_vertical = flip_frame
+
+    def set_flip_frame_horizontal(self, flip_frame: bool):
+        self.flip_frame_horizontal = flip_frame
 
     def set_color_format(self, color_format: str):
         self.color_format = color_format
-
-    @staticmethod
-    def flip(frame: np.array) -> np.array:
-        return cv2.flip(frame, 1)
 
     def get_probe_frame(self) -> Optional[np.array]:
         if not self.reader:

@@ -9,6 +9,7 @@ class VideoManager:
     _vid_sources: Dict[int, VideoSource] = {}
 
     preferred_height = 480
+    preferred_fps = 30
 
     def get_video_source(self, camera_id) -> VideoSource:
         # Check if the reader already exists
@@ -25,6 +26,10 @@ class VideoManager:
 
     def set_preferred_height(self, height: int):
         VideoManager.preferred_height = height
+        self._recreate_existing_sources()
+
+    def set_preferred_fps(self, fps: int):
+        VideoManager.preferred_fps = fps
         self._recreate_existing_sources()
 
     def _create_source(self, camera_id: int):

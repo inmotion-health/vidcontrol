@@ -72,14 +72,16 @@ For more detailed examples, please see the [examples](examples) folder.
 #### VideoManager
 
 ```python
-manager.set_preferred_height(height: int)   # default: 480
+manager.set_preferred_height(height: int)       # default: 480
+manager.set_preferred_fps(fps: int)             # default: 30
 ```
 
 #### VideoSource
 
 ```python
-source.set_flip_frame(flip: bool)           # default: True
-source.set_color_format(color_format: str)  # default: 'rgb', other options: 'bgr'
+source.set_mirror_frame(flip: bool)             # default: True
+source.set_flip_frame_horizontal(flip: bool)    # default: False
+source.set_color_format(color_format: str)      # default: 'rgb', other options: 'bgr'
 ```
 
 ## Contributing and Issues
