@@ -1,3 +1,4 @@
+from typing import Dict
 from vidcontrol.video_platform import video_platform
 from vidcontrol.video_source import VideoSource
 
@@ -5,7 +6,7 @@ import logging as log
 
 
 class VideoManager:
-    _vid_sources = {}
+    _vid_sources: Dict[int, VideoSource] = {}
 
     preferred_height = 480
 
