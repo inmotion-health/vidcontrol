@@ -7,9 +7,6 @@ import vidcontrol.platforms.base as base
 
 
 class MacVideoPlatform(base.VideoPlatform):
-    def __init__(self):
-        print("Initialized MacVideoPlatform")
-
     def get_video_format(self):
         return "avfoundation"
 

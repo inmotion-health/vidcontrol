@@ -12,8 +12,6 @@ class WindowsVideoPlatform(base.VideoPlatform):
     def __init__(self):
         self.graph = FilterGraph()
 
-        print("Initialized WindowsVideoPlatform")
-
     def get_video_format(self):
         return "dshow"
 
