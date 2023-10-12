@@ -9,3 +9,6 @@ ex_multi_webcam: install
 
 ex_single_cam_multi_access: install
 	python examples/single_cam_multi_access.py
+
+ex_change_preferred_height: install
+	python examples/change_preferred_height.py
