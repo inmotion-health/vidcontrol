@@ -64,7 +64,7 @@ class VideoSource:
         resolution, self.fps = video_platform.get_resolution_for(camera_id) or (
             DEFAULT_RESOLUTION,
             DEFAULT_FPS,
-        )
+        )  # FIXME: this is a mess, we should use our preferred height here or just throw an error if we can't get a resolution
 
         self._camera_id = camera_id
         self.width = resolution[0]
