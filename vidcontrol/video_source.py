@@ -22,6 +22,7 @@ class VideoSource:
         self.height = height
         self._camera_id = camera_id
         self.change_camera(camera_id)
+        self.flip_frame = True
 
     def __iter__(self):
         return self
@@ -31,7 +32,14 @@ class VideoSource:
             return
 
         frame = self.reader.get_next_data()
-        return self.flip(frame)
+
+        if self.flip_frame:
+            frame = self.flip(frame)
+
+        return frame
+
+    def set_flip_frame(self, flip_frame: bool):
+        self.flip_frame = flip_frame
 
     @staticmethod
     def flip(frame: np.array) -> np.array:
