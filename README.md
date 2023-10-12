@@ -14,6 +14,32 @@ This package has been developed in conjunction with the [ctrlability](https://gi
 
 ## Getting Started
 
+### Prerequisites
+
+This package requires Python 3.8 or higher. We recommend using a virtual environment for development. You can create a virtual environment using [venv](https://docs.python.org/3/library/venv.html) or [conda](https://docs.conda.io/en/latest/).
+
+Additionally, you will need to install [ffmpeg](https://ffmpeg.org/) on your system. On macOS, you can install ffmpeg using [homebrew](https://brew.sh/):
+
+```bash
+brew install ffmpeg
+```
+
+### Installation
+
+You can install the package from PyPI:
+
+```bash
+pip install vidcontrol
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/inmotion-health/vidcontrol.git
+cd vidcontrol
+pip install .
+```
+
 ### Basic Usage
 
 ```python
@@ -37,6 +63,19 @@ for frame in source:
 For more detailed examples, please see the [examples](examples) folder.
 
 ### Configuration
+
+#### VideoManager
+
+```python
+manager.set_preferred_height(height: int)   # default: 480
+```
+
+#### VideoSource
+
+```python
+source.set_flip_frame(flip: bool)           # default: True
+source.set_color_format(color_format: str)  # default: 'rgb'
+```
 
 ## Contributing and Issues
 
