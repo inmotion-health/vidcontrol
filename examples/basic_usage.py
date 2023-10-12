@@ -18,12 +18,11 @@ except Exception as e:
     exit(1)
 
 # configure the video source
-source.set_flip_frame(False)
+source.set_color_format("bgr")  # openCV uses BGR instead of RGB
 
 # iterate over the frames and display them
 for frame in source:
-    frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-    cv2.imshow("frame", frame_bgr)
+    cv2.imshow("frame", frame)
     key = cv2.waitKey(1)  # Wait for 1 millisecond
     if key == 27:  # Exit loop on 'Esc' key press
         break
