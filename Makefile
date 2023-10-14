@@ -12,3 +12,6 @@ ex_single_cam_multi_access: install
 
 ex_change_preferred_height: install
 	python examples/change_preferred_height.py
+
+ex_pass_config: install
+	python examples/pass_config.py
