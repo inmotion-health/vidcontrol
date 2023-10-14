@@ -20,17 +20,14 @@ class VideoSource:
         device_name = video_platform.get_ffmpeg_device_name(camera_id)
         log.debug(f"Using device name {device_name} for camera {camera_id}")
 
+        input_params = self.build_ffmpeg_input_params()
+
         # create reader for video stream
         try:
             self.reader = imageio.get_reader(
                 device_name,
                 size=resolution,
-                input_params=[
-                    "-framerate",
-                    f"{self.fps}",
-                    "-pixel_format",
-                    "uyvy422",
-                ],
+                input_params=input_params,
             )
         except Exception as e:
             log.error(f"Could not create reader for device {device_name} with resolution {resolution} and fps {fps}")
@@ -44,6 +41,16 @@ class VideoSource:
         self.flip_frame_vertical = True
         self.flip_frame_horizontal = False
         self.color_format = "rgb"
+
+    def build_ffmpeg_input_params(self):
+        input_params = []
+
+        # append framerate to input params
+        input_params += ["-framerate", f"{self.fps}"]
+
+        # append platform specific options to input params
+        input_params += video_platform.get_platform_specific_ffmpeg_options()
+        return input_params
 
     def __iter__(self):
         return self

@@ -94,3 +94,11 @@ class MacVideoPlatform(base.VideoPlatform):
 
     def get_ffmpeg_device_name(self, cam_id: int) -> str:
         return f"<video{cam_id}>"
+
+    def get_platform_specific_ffmpeg_options(self) -> List[str]:
+        options = []
+
+        # add pixel format
+        options += ["-pix_fmt", "uyvy422"]
+
+        return options

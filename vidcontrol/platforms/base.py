@@ -19,6 +19,10 @@ class VideoPlatform:
     def get_ffmpeg_device_name(self, cam_id: int) -> str:
         pass
 
+    @abstractmethod
+    def get_platform_specific_ffmpeg_options(self) -> List[str]:
+        pass
+
     def get_resolution_for(self, camera_id: int, preferred_height: int) -> Tuple[Tuple[int, int], int]:
         resolutions = self.list_available_resolutions(camera_id)
 
