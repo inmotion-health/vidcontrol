@@ -32,6 +32,13 @@ class VideoManager:
         VideoManager.preferred_fps = fps
         self._recreate_existing_sources()
 
+    def set_config(self, config: dict):
+        if "preferred_height" in config:
+            self.set_preferred_height(config["preferred_height"])
+
+        if "preferred_fps" in config:
+            self.set_preferred_fps(config["preferred_fps"])
+
     def _create_source(self, camera_id: int):
         resolution, fps = video_platform.get_resolution_for(camera_id, VideoManager.preferred_height)
         log.debug(f"Using resolution {resolution} and fps {fps} for camera {camera_id}")

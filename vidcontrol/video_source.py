@@ -81,6 +81,16 @@ class VideoSource:
     def set_color_format(self, color_format: str):
         self.color_format = color_format
 
+    def set_config(self, config: dict):
+        if "mirror_frame" in config:
+            self.set_mirror_frame(config["mirror_frame"])
+
+        if "flip_frame_horizontal" in config:
+            self.set_flip_frame_horizontal(config["flip_frame_horizontal"])
+
+        if "color_format" in config:
+            self.set_color_format(config["color_format"])
+
     def get_probe_frame(self) -> Optional[np.array]:
         if not self.reader:
             log.error("probe frame: No reader found!")
