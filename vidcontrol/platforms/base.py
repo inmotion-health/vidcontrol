@@ -23,16 +23,33 @@ class VideoPlatform:
     def get_platform_specific_ffmpeg_options(self) -> List[str]:
         pass
 
-    def get_resolution_for(self, camera_id: int, preferred_height: int) -> Tuple[Tuple[int, int], int]:
+    def get_resolution_for(
+        self, camera_id: int, preferred_height: int, preferred_fps: int, next_best: bool = False
+    ) -> Tuple[Tuple[int, int], int]:
         resolutions = self.list_available_resolutions(camera_id)
 
         if not resolutions:
             raise Exception(f"No resolutions found for camera {camera_id}")
 
-        # Find 720p resolutions
-        _720_resolutions = [res for res in resolutions if res[0][1] == preferred_height]
+        # Filter by preferred height
+        height_filtered = [res for res in resolutions if res[0][1] == preferred_height]
 
-        if not _720_resolutions:
-            return resolutions[0][0], resolutions[0][1]
+        # If preferred height is found
+        if height_filtered:
+            fps_filtered = [res for res in height_filtered if res[1] == preferred_fps]
+            if fps_filtered:
+                return fps_filtered[0]
 
-        return _720_resolutions[0][0], _720_resolutions[0][1]
+        # If 'next_best' flag is True, find closest match
+        if next_best:
+            # If preferred height was not found, find closest height match
+            if not height_filtered:
+                closest_height = min(resolutions, key=lambda x: abs(x[0][1] - preferred_height))
+                return closest_height
+
+            # If preferred height was found but fps was not, find closest fps match in height_filtered
+            closest_fps = min(height_filtered, key=lambda x: abs(x[1] - preferred_fps))
+            return closest_fps
+
+        # If 'next_best' is False and we haven't returned yet, raise error
+        raise Exception(f"No matching resolution found for camera {camera_id}")
