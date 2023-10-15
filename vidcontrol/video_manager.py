@@ -44,7 +44,7 @@ class VideoManager:
             self.set_preferred_fps(config["preferred_fps"])
 
         if "next_best" in config:
-            VideoManager.next_best = config["next_best"]
+            self.set_next_best(config["next_best"])
 
     def _create_source(self, camera_id: int):
         resolution, fps = video_platform.get_resolution_for(
