@@ -1,31 +1,62 @@
-from abc import abstractmethod
 from typing import Dict, Optional, Tuple, List
+from abc import ABC, abstractmethod
 
 
-class VideoPlatform:
+class VideoPlatform(ABC):
+    """
+    Abstract base class for video platforms.
+
+    Defines methods for getting video format, listing video devices, listing available resolutions for a device,
+    getting the ffmpeg device name, and getting platform-specific ffmpeg options.
+    """
+
     @abstractmethod
     def get_video_format(self) -> str:
         pass
 
     @abstractmethod
     def list_video_devices(self) -> Dict[int, str]:
+        """
+        Returns a dictionary of available video devices, where the keys are device IDs and the values are device names.
+
+        For example, this method might return `{0: "Integrated Camera", 1: "USB Camera"}`.
+        """
         pass
 
     @abstractmethod
     def list_available_resolutions(self, device_id: int) -> Optional[List[Tuple[Tuple[int, int], int]]]:
+        """
+        Returns a list of available resolutions for the specified device.
+
+        Args:
+            device_id (int): The ID of the device to retrieve resolutions for.
+
+        Returns:
+            Optional[List[Tuple[Tuple[int, int], int]]]: A list of tuples, where each tuple contains a resolution
+            (represented as a tuple of width and height) and a refresh rate (in Hz). Returns None if the device is not
+            found or if an error occurs while retrieving the resolutions.
+            Example: `[((1280, 720), 30), ((640, 480), 60)]`
+        """
         pass
 
     @abstractmethod
-    def get_ffmpeg_device_name(self, cam_id: int) -> str:
+    def _get_ffmpeg_device_name(self, cam_id: int) -> str:
         pass
 
     @abstractmethod
-    def get_platform_specific_ffmpeg_options(self) -> List[str]:
+    def _get_platform_specific_ffmpeg_options(self) -> List[str]:
         pass
 
     def get_resolution_for(
         self, camera_id: int, preferred_height: int, preferred_fps: int, next_best: bool = False
     ) -> Tuple[Tuple[int, int], int]:
+        """
+        Get the resolution for a given camera ID, preferred height, and preferred FPS.
+
+        If `next_best` is True, find the closest match if no exact match is found.
+
+        Raises an exception if no matching resolution is found.
+        """
         resolutions = self.list_available_resolutions(camera_id)
 
         if not resolutions:

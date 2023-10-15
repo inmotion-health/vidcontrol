@@ -14,5 +14,5 @@ class LinuxVideoPlatform(base.VideoPlatform):
     def list_available_resolutions(self, device_id: int) -> Optional[Tuple[Tuple[int, int], int]]:
         pass
 
-    def get_platform_specific_ffmpeg_options(self) -> List[str]:
+    def _get_platform_specific_ffmpeg_options(self) -> List[str]:
         return []

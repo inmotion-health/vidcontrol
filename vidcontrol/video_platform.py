@@ -8,6 +8,9 @@ std_platform = importlib.import_module("platform")
 
 
 def get_platform():
+    """
+    Returns an instance of the appropriate video platform class based on the current operating system.
+    """
     system = std_platform.system()
     if system == "Darwin":
         return MacVideoPlatform()

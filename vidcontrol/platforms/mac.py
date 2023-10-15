@@ -11,7 +11,9 @@ class MacVideoPlatform(base.VideoPlatform):
         return "avfoundation"
 
     def list_video_devices(self) -> Dict[int, str]:
-        output = subprocess.get_cmd_output(["ffmpeg", "-f", self.get_video_format(), "-list_devices", "true", "-i", ""])
+        output = subprocess._get_cmd_output(
+            ["ffmpeg", "-f", self.get_video_format(), "-list_devices", "true", "-i", ""]
+        )
 
         if output == "":
             raise Exception("No output from ffmpeg")
@@ -58,7 +60,7 @@ class MacVideoPlatform(base.VideoPlatform):
         return video_devices
 
     def list_available_resolutions(self, device_id: int) -> Optional[List[Tuple[Tuple[int, int], int]]]:
-        output = subprocess.get_cmd_output(
+        output = subprocess._get_cmd_output(
             [
                 "ffmpeg",
                 "-f",
@@ -92,10 +94,10 @@ class MacVideoPlatform(base.VideoPlatform):
 
         return resolutions
 
-    def get_ffmpeg_device_name(self, cam_id: int) -> str:
+    def _get_ffmpeg_device_name(self, cam_id: int) -> str:
         return f"<video{cam_id}>"
 
-    def get_platform_specific_ffmpeg_options(self) -> List[str]:
+    def _get_platform_specific_ffmpeg_options(self) -> List[str]:
         options = []
 
         # add pixel format

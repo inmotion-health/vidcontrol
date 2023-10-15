@@ -36,8 +36,8 @@ class WindowsVideoPlatform(base.VideoPlatform):
 
         return resolutions
 
-    def get_ffmpeg_device_name(self, cam_id: int) -> str:
+    def _get_ffmpeg_device_name(self, cam_id: int) -> str:
         return f"<video{cam_id}>"
 
-    def get_platform_specific_ffmpeg_options(self) -> List[str]:
+    def _get_platform_specific_ffmpeg_options(self) -> List[str]:
         return []
