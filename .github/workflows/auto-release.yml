@@ -12,22 +12,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install Changelog Generator
+        run: sudo gem install github_changelog_generator
+
       - name: Generate changelog
-        id: changelog
-        uses: github-changelog-generator/github-changelog-generator@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: ""
-          header-label: "## Changelog"
-          unreleased: false
-          output: CHANGELOG.md
+        run: github_changelog_generator -t ${{ secrets.GITHUB_TOKEN }} --base CHANGELOG.md --header-label "## Changelog" --unreleased false --output RELEASE_CHANGELOG.md
+
+      - name: Read Changelog
+        id: get_changelog
+        run: echo "CHANGELOG=$(cat RELEASE_CHANGELOG.md)" >> $GITHUB_ENV
 
       - name: Create Release
-        id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: ${{ steps.changelog.outputs.changelog }}
+          body: ${{ env.CHANGELOG }}
           draft: false
           prerelease: false
