@@ -1,0 +1,33 @@
+name: Auto Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Generate changelog
+        id: changelog
+        uses: github-changelog-generator/github-changelog-generator@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: ""
+          header-label: "## Changelog"
+          unreleased: false
+          output: CHANGELOG.md
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
