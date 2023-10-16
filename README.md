@@ -1,5 +1,9 @@
 # vidcontrol
 
+[![PyPI version](https://badge.fury.io/py/vidcontrol.svg)](https://badge.fury.io/py/vidcontrol)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/vidcontrol)](https://pypi.org/project/vidcontrol/)
+![PyPI - License](https://img.shields.io/pypi/l/vidcontrol)
+
 ⚠️ This package is still under development and is not yet ready for production use. ⚠️
 
 vidcontrol is a Python package for managing multi-webcam video capture. It is designed to be cross-platform and easy to use. Under the hood, we use [imageio](https://imageio.github.io/) for video capture, which itself uses [ffmpeg](https://ffmpeg.org/). This package offers various utility functions for listing and selecting available webcams, and for capturing video from multiple webcams simultaneously. We also provide an easy-to-use interface for resolving image resolutions and frame rates.
