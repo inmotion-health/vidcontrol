@@ -117,3 +117,21 @@ class VideoSource:
 
         if "color_format" in config:
             self.set_color_format(config["color_format"])
+
+    def get_height(self) -> Optional[int]:
+        """
+        Returns the height of the video source.
+        """
+        if self.reader:
+            return self.reader.get_meta_data()["size"][1]
+        else:
+            return None
+
+    def get_width(self) -> Optional[int]:
+        """
+        Returns the width of the video source.
+        """
+        if self.reader:
+            return self.reader.get_meta_data()["size"][0]
+        else:
+            return None
