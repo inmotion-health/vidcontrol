@@ -4,6 +4,7 @@ from typing import Optional
 import cv2
 import imageio
 import numpy as np
+from threading import Lock
 
 from .video_platform import video_platform
 
@@ -25,6 +26,7 @@ class VideoSource:
         self.fps = fps
         self.resolution = resolution
         self._camera_id = camera_id
+        self._lock = Lock()
 
         device_name = video_platform._get_ffmpeg_device_name(camera_id)
         log.debug(f"Using device name {device_name} for camera {camera_id}")
@@ -65,19 +67,20 @@ class VideoSource:
         return self
 
     def __next__(self) -> np.array:
-        if not self.reader:
-            return
+        with self._lock:
+            if not self.reader:
+                return
 
-        frame = self.reader.get_next_data()
+            frame = self.reader.get_next_data()
 
-        if self.flip_frame_vertical:
-            frame = cv2.flip(frame, 1)
+            if self.flip_frame_vertical:
+                frame = cv2.flip(frame, 1)
 
-        if self.flip_frame_horizontal:
-            frame = cv2.flip(frame, 0)
+            if self.flip_frame_horizontal:
+                frame = cv2.flip(frame, 0)
 
-        if self.color_format == "bgr":
-            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+            if self.color_format == "bgr":
+                frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
         return frame
 
