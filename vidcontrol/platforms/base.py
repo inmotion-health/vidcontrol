@@ -1,5 +1,5 @@
-from typing import Dict, Optional, Tuple, List
 from abc import ABC, abstractmethod
+from typing import Dict, List, Optional, Tuple
 
 
 class VideoPlatform(ABC):

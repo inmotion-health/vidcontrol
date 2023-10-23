@@ -1,9 +1,11 @@
-import logging as log
+import logging
 import re
-from typing import Dict, Optional, Tuple, List
+from typing import Dict, List, Optional, Tuple
 
-import vidcontrol.util.subprocess as subprocess
 import vidcontrol.platforms.base as base
+import vidcontrol.util.subprocess as subprocess
+
+log = logging.getLogger(__name__)
 
 
 class MacVideoPlatform(base.VideoPlatform):

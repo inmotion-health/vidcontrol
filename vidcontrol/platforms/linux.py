@@ -1,5 +1,7 @@
-from typing import List, Optional, Tuple, Dict
-import logging as log
+import logging
+from typing import Dict, List, Optional, Tuple
+
+log = logging.getLogger(__name__)
 
 import vidcontrol.platforms.base as base
 

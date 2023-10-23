@@ -1,12 +1,14 @@
-import logging as log
+import logging
+from threading import Lock
 from typing import Optional
 
 import cv2
 import imageio
 import numpy as np
-from threading import Lock
 
 from .video_platform import video_platform
+
+log = logging.getLogger(__name__)
 
 DEFAULT_RESOLUTION = (1280, 720)
 DEFAULT_FPS = 30

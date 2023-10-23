@@ -1,8 +1,10 @@
+import logging
 from typing import Dict
+
 from vidcontrol.video_platform import video_platform
 from vidcontrol.video_source import VideoSource
 
-import logging as log
+log = logging.getLogger(__name__)
 
 
 class VideoManager:

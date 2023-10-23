@@ -1,11 +1,14 @@
-import logging as log
+import logging
 import platform
-from typing import Optional, Tuple, Dict, List
+from typing import Dict, List, Optional, Tuple
 
 import vidcontrol.platforms.base as base
 
 if platform.system() == "Windows":
     from pygrabber.dshow_graph import FilterGraph
+
+
+log = logging.getLogger(__name__)
 
 
 class WindowsVideoPlatform(base.VideoPlatform):
