@@ -1,8 +1,7 @@
-from abc import ABC, abstractmethod
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Protocol, Tuple
 
 
-class VideoPlatform(ABC):
+class VideoPlatform(Protocol):
     """
     Abstract base class for video platforms.
 
@@ -10,20 +9,17 @@ class VideoPlatform(ABC):
     getting the ffmpeg device name, and getting platform-specific ffmpeg options.
     """
 
-    @abstractmethod
     def get_video_format(self) -> str:
-        pass
+        ...
 
-    @abstractmethod
     def list_video_devices(self) -> Dict[int, str]:
         """
         Returns a dictionary of available video devices, where the keys are device IDs and the values are device names.
 
         For example, this method might return `{0: "Integrated Camera", 1: "USB Camera"}`.
         """
-        pass
+        ...
 
-    @abstractmethod
     def list_available_resolutions(self, device_id: int) -> Optional[List[Tuple[Tuple[int, int], int]]]:
         """
         Returns a list of available resolutions for the specified device.
@@ -37,15 +33,13 @@ class VideoPlatform(ABC):
             found or if an error occurs while retrieving the resolutions.
             Example: `[((1280, 720), 30), ((640, 480), 60)]`
         """
-        pass
+        ...
 
-    @abstractmethod
     def _get_ffmpeg_device_name(self, cam_id: int) -> str:
-        pass
+        ...
 
-    @abstractmethod
     def _get_platform_specific_ffmpeg_options(self) -> List[str]:
-        pass
+        ...
 
     def get_resolution_for(
         self, camera_id: int, preferred_height: int, preferred_fps: int, next_best: bool = False
