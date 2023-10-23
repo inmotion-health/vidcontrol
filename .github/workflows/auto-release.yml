@@ -16,7 +16,7 @@ jobs:
         run: sudo gem install github_changelog_generator
 
       - name: Generate changelog
-        run: github_changelog_generator -t ${{ secrets.GITHUB_TOKEN }} --base CHANGELOG.md --header-label "## Changelog" --unreleased false --output RELEASE_CHANGELOG.md
+        run: github_changelog_generator -u YOUR_USER -p YOUR_PROJECT -t ${{ secrets.GITHUB_TOKEN }} --base CHANGELOG.md --header-label "## Changelog" --unreleased false --output RELEASE_CHANGELOG.md
 
       - name: Read Changelog
         id: get_changelog
